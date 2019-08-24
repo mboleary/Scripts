@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Script to determine whether or not to open a link in a web browser
+
+WEB_BROWSER=firefox
+
+TEXT_ED=code
+
+for i in "$@"
+do
+case $i in 
+	http://*|https://*|ftp://*)
+	echo "Opening in Browser..."
+	$WEB_BROWSER $i &
+	;;
+	file://*|/*|*)
+	echo "Opening in Editor..."
+	$TEXT_ED $i &
+	;;
+esac
+done

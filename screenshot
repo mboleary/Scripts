@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Takes a screenshot of the window under the cursor, saves the image, and copies the path of the image to the clipboard
+
+PATH_OF_PIC=${HOME}/Pictures/screenshot/$(date +%Y%m%d_%H%M%S).png
+
+spectacle -u -b -o "${PATH_OF_PIC}" &
+
+echo "Taking Screenshot, saving to ${PATH_OF_PIC}"
+
+echo "${PATH_OF_PIC}" | xclip -i
+
+

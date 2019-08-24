@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Uses Firefox to search for something on the internet using the default Search Engine
+
+firefox -new-window -search "$1"
