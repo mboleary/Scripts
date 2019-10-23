@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Script that says something over the loudspeaker sound card
+
+# aplay -D sysdefault:CARD=Set long.wav --> Works!! Changing `CARD` changes the card to another device!
+
+PCHDEV=($(aplay -L | grep sysdefault:CARD=[A-Za-z]*$))
+
+for item in ${PCHDEV[*]}
+do
+    espeak --stdout "$1" | aplay -D $item -i
+done
+
