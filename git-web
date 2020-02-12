@@ -3,9 +3,9 @@
 # Opens the Web Page for a repo in Github, Gitlab, or sr.ht
 # Requires that git be installed, but currently assumes that it is
 
-GIT_STATUS=$(git status)
+GIT_STATUS=$(git status 2>&1)
 
-if [[ $(git status) =~ ^fatal: ]]; then
+if [[ ${GIT_STATUS} =~ ^fatal: ]]; then
     echo "Not a Git Repository!"
     exit 1
 fi
@@ -18,6 +18,8 @@ echo $GIT_ORIGIN
 
 # TODO Fix bug where link is malformed if the repo name has '.git' anywhere else
 
-HTTP=$(echo $GIT_ORIGIN | sed "s/git@github.com:/https:\/\/github.com\//" | sed s/\\.git//g)
+HTTP=$(echo $GIT_ORIGIN | sed "s/^Fetch URL://" | sed "s/git@github.com:/https:\/\/github.com\//" | sed s/\\.git//g)
 
-echo $HTTP
+echo "Opening $HTTP ..."
+
+xdg-open $HTTP
