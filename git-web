@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Opens the Web Page for a repo in Github, Gitlab, or sr.ht
+# Requires that git be installed, but currently assumes that it is
+
+GIT_STATUS=$(git status)
+
+if [[ $(git status) =~ ^fatal: ]]; then
+    echo "Not a Git Repository!"
+    exit 1
+fi
+
+GIT_ORIGIN=$(git remote show origin | grep "Fetch URL:")
+
+echo $GIT_ORIGIN
+
+# Currently only works with github
+
+# TODO Fix bug where link is malformed if the repo name has '.git' anywhere else
+
+HTTP=$(echo $GIT_ORIGIN | sed "s/git@github.com:/https:\/\/github.com\//" | sed s/\\.git//g)
+
+echo $HTTP
